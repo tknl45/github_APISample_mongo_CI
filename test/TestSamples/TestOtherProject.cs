@@ -10,6 +10,7 @@ using APISample.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MyFirstUnitTests.TestSamples {
     /// <summary>
@@ -74,7 +75,7 @@ namespace MyFirstUnitTests.TestSamples {
            
            //需要加入appsettings.json 給APISample.dll讀取mongo url
            _demo.demo_list_error_log();
-            
+
             Assert.NotNull(_demo.Data);
         }
 
@@ -91,7 +92,10 @@ namespace MyFirstUnitTests.TestSamples {
            _demo.RedisSet(key,value);
            _demo.RedisGet(key);
 
+           string json = JsonConvert.SerializeObject(_demo);
+            _output.WriteLine(json);
             Assert.True(value.Equals(_demo.Data));
+            
         }
     }
 }

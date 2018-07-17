@@ -70,7 +70,7 @@ namespace APISample.Helper
         //寫入錯誤紀錄
         public void LogError(Exception exception)
         {
-            var prjName = "TEST";
+            var prjName = Assembly.GetCallingAssembly().GetName().Name;
            
 
 
@@ -87,7 +87,7 @@ namespace APISample.Helper
         //讀取錯誤紀錄
         public List<MongoLog> ListLog()
         {
-             var prjName = "TEST";
+            var prjName = Assembly.GetCallingAssembly().GetName().Name;
 
             var list =  _db.GetCollection<MongoLog>($"{prjName}_log")
             .Find(Builders<MongoLog>.Filter.Empty)

@@ -6,6 +6,7 @@ services:
   - redis-server
 script:
  - dotnet --version
+ - mongo --version 
  - dotnet restore ./app/APISample.csproj --verbosity m
  - dotnet publish ./app/APISample.csproj
  - dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m

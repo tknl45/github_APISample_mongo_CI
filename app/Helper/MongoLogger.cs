@@ -70,7 +70,7 @@ namespace APISample.Helper
         //寫入錯誤紀錄
         public void LogError(Exception exception)
         {
-            var prjName = Assembly.GetCallingAssembly().GetName().Name;
+            var prjName = "TEST";
            
 
 

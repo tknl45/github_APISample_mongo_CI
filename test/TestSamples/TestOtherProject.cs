@@ -74,7 +74,7 @@ namespace MyFirstUnitTests.TestSamples {
            
            //需要加入appsettings.json 給APISample.dll讀取mongo url
            _demo.demo_list_error_log();
-
+            
             Assert.NotNull(_demo.Data);
         }
 

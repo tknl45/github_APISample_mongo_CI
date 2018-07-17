@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+  sample:
+    build: .
+    ports: ["80"]
+    links:
+      - mongodb
+      - redis
+      
+  lb:
+    image: dockercloud/haproxy
+    ports: ["80:80"]
+    links:
+      - sample
+    # 設定宿主電腦路徑 （HOST:CONTAINER）
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+
+  mongodb:
+    image: mongo:latest
+    ports: ["27017:27017"]
+
+  redis:
+    image: redis:latest
+    ports: ["6379:6379"]
+    
+
+

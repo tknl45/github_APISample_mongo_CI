@@ -133,19 +133,6 @@ namespace MyFirstUnitTests.TestSamples
             Assert.Contains("xx", responseString);
         }
 
-        /// <summary>
-        /// 不要null
-        /// </summary>
-        [Fact]
-        [Trait ("Category", "API")]
-        public void Test_Redis () {
-           var key = "data";
-           var value = "kkk";
-           //需要加入appsettings.json 給APISample.dll讀取mongo url
-           _demo.RedisSet(key,value);
-           _demo.RedisGet(key);
-
-            Assert.True(value.Equals(_demo.Data));
-        }
+        
     }
 }

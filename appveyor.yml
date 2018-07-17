@@ -28,8 +28,9 @@ clone_depth: 1
 test_script:
   # restore packages for our unit tests
   - cmd: dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m
+  - cmd: tree ./test
   # 複製appsettings.json
-  #- cmd: cp ./app/appsettings_appveyor.json ./test/bin/Debug/netcoreapp2.0/appsettings.json
+  - cmd: cp ./app/appsettings_appveyor.json ./test/bin/Debug/netcoreapp2.0/appsettings.json
   # run the unit tests (requires changing into the test directory)
   - cmd: cd test
   - cmd: dotnet test

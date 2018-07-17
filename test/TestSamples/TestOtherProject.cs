@@ -70,14 +70,12 @@ namespace MyFirstUnitTests.TestSamples {
         /// </summary>
         [Fact]
         [Trait ("Category", "API")]
-        public void Test_Redis () {
-           var key = "data";
-           var value = "kkk";
+        public void Test_demo_list_error_log () {
+           
            //需要加入appsettings.json 給APISample.dll讀取mongo url
-           _demo.RedisSet(key,value);
-           _demo.RedisGet(key);
+           _demo.demo_list_error_log();
 
-            Assert.True(value.Equals(_demo.Data));
+            Assert.NotNull(_demo.Data);
         }
 
     }

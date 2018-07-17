@@ -83,42 +83,6 @@ namespace MyFirstUnitTests.TestSamples
         }
 
 
-        [Fact(Skip="還在測試POST 先跳過")]
-        [Trait ("Category", "RestAPI")]
-        public async Task Test_demo_data2()
-        {    
-            string message = "135456";
-
-            var formData = new Dictionary<string, string>
-            {
-                {"FirstName", "Sarah2"},
-                {"LastName", "Smith2"}     
-            };
-
-
-            HttpRequestMessage postRequest = new HttpRequestMessage(HttpMethod.Post, $"/api/Demo/demo_data?message={message}")
-            {
-                Content = new FormUrlEncodedContent(formData)
-            };
-           
-           //ACCEPT header
-            _client.DefaultRequestHeaders
-                .Accept
-                .Add(new MediaTypeWithQualityHeaderValue("x-www-form-urlencoded"));
-
-            
-
-            var response = await _client.SendAsync(postRequest);
-            var responseString = await response.Content.ReadAsStringAsync();
-            _output.WriteLine(responseString);
-            response.EnsureSuccessStatusCode();
-
-            
-            Assert.Contains(message, responseString);
-            // Additional asserts could go here 
-        }
-        //Testing POST Actions with TestServer 
-
 
 
         [Theory]
@@ -167,6 +131,21 @@ namespace MyFirstUnitTests.TestSamples
             _output.WriteLine(responseString);
 
             Assert.Contains("xx", responseString);
+        }
+
+        /// <summary>
+        /// 不要null
+        /// </summary>
+        [Fact]
+        [Trait ("Category", "API")]
+        public void Test_Redis () {
+           var key = "data";
+           var value = "kkk";
+           //需要加入appsettings.json 給APISample.dll讀取mongo url
+           _demo.RedisSet(key,value);
+           _demo.RedisGet(key);
+
+            Assert.True(value.Equals(_demo.Data));
         }
     }
 }

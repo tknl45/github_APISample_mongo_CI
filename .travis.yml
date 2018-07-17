@@ -10,5 +10,6 @@ script:
  - dotnet publish ./app/APISample.csproj
  - dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m
  - dotnet build ./test/MyFirstUnitTests.csproj --verbosity m
+ - cp ./app/appsettings_appveyor.json ./test/bin/Debug/netcoreapp2.0/appsettings.json
  - cd test
  - dotnet test

@@ -87,7 +87,7 @@ namespace APISample.Helper
         //讀取錯誤紀錄
         public List<MongoLog> ListLog()
         {
-            var prjName = Assembly.GetCallingAssembly().GetName().Name;
+             var prjName = "TEST";
 
             var list =  _db.GetCollection<MongoLog>($"{prjName}_log")
             .Find(Builders<MongoLog>.Filter.Empty)

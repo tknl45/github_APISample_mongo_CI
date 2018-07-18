@@ -13,8 +13,6 @@ stages:
 before_script:
   # 版本
   - dotnet --version
-  - mongo --version
-  - redis-server --version
 
 # 工作job
 build_job:

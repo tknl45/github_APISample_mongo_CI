@@ -2,7 +2,7 @@ image: microsoft/aspnetcore-build:2.0
 # 加入服務
 services:
   - redis
-    alias: redisDB
+    alias:redisDB
   - mongo
 
 # 設定工作階段

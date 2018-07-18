@@ -2,7 +2,6 @@ image: microsoft/aspnetcore-build:2.0
 # 加入服務
 services:
   - redis
-    alias:redisDB
   - mongo
 
 # 設定工作階段
@@ -14,9 +13,7 @@ stages:
 before_script:
   # 版本
   #- dotnet --version
-  
   - ping redis -c 1
-  - ping redisDB -c 1
   #- ping mongo -c 5
 
 # 工作job

@@ -15,6 +15,7 @@ before_script:
   #- dotnet --version
   #- ping redis -c 5
   #- ping mongo -c 5
+  - apt-get install redis-server
 
 # 工作job
 build_job:
@@ -30,8 +31,7 @@ test_job:
   stage: test
   only:
     - master
-  script:
-    - sudo apt-get install redis-server
+  script:    
     - dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m
     - dotnet build ./test/MyFirstUnitTests.csproj 
     - cp ./app/appsettings_gitlab.json ./test/bin/Debug/netcoreapp2.0/appsettings.json    

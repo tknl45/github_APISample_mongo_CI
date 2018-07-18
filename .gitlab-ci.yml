@@ -42,6 +42,8 @@ test_job:
 # 工作test
 deploy_job:
   stage: deploy
+  script:
+    - echo Deploy OK
   #會把裡面編譯或程式的產出物存放起來，提供介面給其他需要的人使用
   artifacts:
     paths:

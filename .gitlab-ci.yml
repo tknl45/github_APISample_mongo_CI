@@ -12,9 +12,9 @@ stages:
 # 執行前檢查
 before_script:
   # 版本
-  - dotnet --version
-  - ping redis -c 5
-  - ping mongo -c 5
+  #- dotnet --version
+  #- ping redis -c 5
+  #- ping mongo -c 5
 
 # 工作job
 build_job:

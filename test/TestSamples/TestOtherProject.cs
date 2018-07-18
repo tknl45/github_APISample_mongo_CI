@@ -83,7 +83,7 @@ namespace MyFirstUnitTests.TestSamples {
         /// <summary>
         /// 不要null
         /// </summary>
-        [Fact]
+        [Fact(Skip = "不要驗redis")]
         [Trait ("Category", "API")]
         public void Test_Redis () {
            var key = "data";

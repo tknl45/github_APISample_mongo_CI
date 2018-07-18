@@ -1,13 +1,11 @@
 image: microsoft/aspnetcore-build:2.0
-# 加入服務
-services:
-  - redis
-  - mongo
+
 
 # 設定工作階段
 stages:
   - build
   - test
+  - deploy
 
 # 執行前檢查
 before_script:
@@ -30,9 +28,21 @@ test_job:
   stage: test
   only:
     - master
+  # 加入服務
+  services:
+    - redis
+    - mongo
   script:    
     - dotnet restore ./test/MyFirstUnitTests.csproj --verbosity m
     - dotnet build ./test/MyFirstUnitTests.csproj 
     - cp ./app/appsettings_gitlab.json ./test/bin/Debug/netcoreapp2.0/appsettings.json    
     - cd test
     - dotnet test
+
+# 工作test
+deploy_job:
+  stage: deploy
+  #會把裡面編譯或程式的產出物存放起來，提供介面給其他需要的人使用
+  artifacts:
+    paths:
+      - ./app/bin/Debug/netcoreapp2.0/publish

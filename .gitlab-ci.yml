@@ -1,0 +1,42 @@
+image: microsoft/aspnetcore:2.0
+stages:
+  - build
+  - deploy_dev
+before_script:
+  # Install ssh-agent if not already installed, it is required by Docker.
+  # (change apt-get to yum if you use a CentOS-based image)
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+  # Run ssh-agent (inside the build environment)
+  - eval $(ssh-agent -s)
+
+  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  # error: https://gitlab.com/gitlab-examples/ssh-private-key/issues/1
+  # - echo "$SSH_PRIVATE_KEY_DEV"
+  - ssh-add <(echo "$SSH_PRIVATE_KEY_DEV")
+
+  # For Docker builds disable host key checking. Be aware that by adding that
+  # you are suspectible to man-in-the-middle attacks.
+  # WARNING: Use this only with the Docker executor, if you use it with shell
+  # you will overwrite your user's SSH config.
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - dotnet --version
+build_job:
+  stage: build
+  only:
+    - master
+  script:
+    - dotnet restore ./app/APISample.csproj --verbosity m
+    - dotnet publish ./app/APISample.csproj
+#deploy_dev_job:
+#  stage: deploy_dev
+#  environment:
+#    name: development
+#  only:
+#    - master
+#  script:
+#    # 发布程序并部署运行
+#    - dotnet publish -c Release --output bin/publish
+#    - scp -r bin/publish root@$DEPLOY_SERVER_DEV:/home/xishuai/wwwroot/hwapp
+#    - ssh root@$DEPLOY_SERVER_DEV "supervisorctl restart hwapp && curl http://localhost:8088/api/values"

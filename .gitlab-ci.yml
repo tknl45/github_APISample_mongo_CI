@@ -22,6 +22,10 @@ build_job:
   script:
     - dotnet restore ./app/APISample.csproj --verbosity m
     - dotnet publish ./app/APISample.csproj
+  #會把裡面編譯或程式的產出物存放起來，提供介面給其他需要的人使用
+  artifacts:
+    paths:
+      - ./app/bin/Debug/netcoreapp2.0/publish
 
 # 工作test
 test_job:
@@ -44,7 +48,4 @@ deploy_job:
   stage: deploy
   script:
     - echo Deploy OK
-  #會把裡面編譯或程式的產出物存放起來，提供介面給其他需要的人使用
-  artifacts:
-    paths:
-      - ./app/bin/Debug/netcoreapp2.0/publish
+ 

@@ -13,8 +13,8 @@ stages:
 before_script:
   # 版本
   - dotnet --version
-  - ping redis
-  - ping mongo
+  - ping redis -c 5
+  - ping mongo -c 5
 
 # 工作job
 build_job:

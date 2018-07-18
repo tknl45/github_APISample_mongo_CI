@@ -34,7 +34,7 @@ namespace APISample.Helper
             ConfigurationOptions option = new ConfigurationOptions
             {
                 AbortOnConnectFail = false,
-                EndPoints = { Configuration["RedisConnection:ConnectionString"] }
+                EndPoints = {{ Configuration["RedisConnection:ConnectionString"], 6379 }}
             };
             
             

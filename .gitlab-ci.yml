@@ -1,8 +1,8 @@
 image: microsoft/aspnetcore-build:2.0
 # 加入服務
 services:
-  - redis:latest
-  - mongodb:latest
+  - redis
+  - mongo
 
 # 設定工作階段
 stages:

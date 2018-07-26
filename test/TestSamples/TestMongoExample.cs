@@ -52,7 +52,6 @@ namespace test.TestSamples
 
             //Then
             Assert.Equal(12, list2.Count);
-            Assert.Equal("2", list2[0]["region"]);
             Assert.Equal("19", list2[0]["total"]);
 
 

@@ -44,10 +44,9 @@ namespace APISample.Controllers
             if(MongoLogger._db == null){
                 MongoLogger.getInstance();
             }
-            Task task = MongoLogger._db.GetCollection<BsonDocument>(collection).InsertManyAsync(list);
+            MongoLogger._db.GetCollection<BsonDocument>(collection).InsertMany(list);
 
-            this.Data = task.ToJson();
-
+           
         }
 
         [HttpGet("drop")]

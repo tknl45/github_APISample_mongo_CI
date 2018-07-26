@@ -15,5 +15,9 @@
 > dotnet test --filter Category=API --logger:trx
 > dotnet test --filter Category=RestAPI --logger:trx
 
+
+> dotnet test --filter Category=mongo
+
+
 指令執行後會產生TestResults資料夾
 資料夾中的有xxxx.trx檔，可藉由visual studio 2017打開

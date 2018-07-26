@@ -13,7 +13,7 @@ namespace APISample.Helper
     public class MongoLogger
     {
 
-        static IMongoDatabase _db;
+        public static IMongoDatabase _db;
 
         public static IConfiguration Configuration { get; set; }
         public static MongoLogger getInstance()

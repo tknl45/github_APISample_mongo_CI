@@ -52,9 +52,13 @@ namespace APISample.Middleware
                 else if (statusCode != 200)
                 {
                     msg = "未知錯誤";
+                }else if (statusCode == 304)
+                {
+                    msg = "未知錯誤304";
                 }
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
+                    Console.WriteLine("statusCode:"+statusCode);
                     await HandleExceptionAsync(context, statusCode, msg);
                 }
             }

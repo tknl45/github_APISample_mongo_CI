@@ -19,7 +19,7 @@ namespace test.TestSamples
             //When
             mongoExampleController.drop();
             mongoExampleController.create();
-            Thread.Sleep(200);
+            Thread.Sleep(500);
             mongoExampleController.list();
             var list = (List<School>)mongoExampleController.Data;
             

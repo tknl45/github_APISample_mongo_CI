@@ -37,6 +37,7 @@ namespace APISample.Middleware
             {
                 var statusCode = context.Response.StatusCode;
                 var msg = "";
+                Console.WriteLine("statusCode2:"+statusCode);
                 if (statusCode == 401)
                 {
                     msg = "未授權";
@@ -48,16 +49,21 @@ namespace APISample.Middleware
                 else if (statusCode == 502)
                 {
                     msg = "請求錯誤";
+                }else if (statusCode == 304)
+                {
+                    msg = "";
                 }
                 else if (statusCode != 200)
                 {
                     msg = "未知錯誤";
-                }else if (statusCode == 304)
-                {
-                    msg = "未知錯誤304";
+                    Console.WriteLine("statusCode != 200 /"+statusCode);
+                    Console.WriteLine("msg:"+msg);
                 }
+                
+
                 if (!string.IsNullOrWhiteSpace(msg))
                 {
+                    Console.WriteLine("msg:"+msg);
                     Console.WriteLine("statusCode:"+statusCode);
                     await HandleExceptionAsync(context, statusCode, msg);
                 }

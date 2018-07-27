@@ -167,7 +167,9 @@ namespace APISample.Controllers
             this.Message = $"第{firstNum}~{lastNum}筆，總共{count}筆";
         }
 
-
+        /// <summary>
+        /// 計算同一region的學校總數
+        /// </summary>
         [HttpGet("countByRegion")]
         public void countByRegion(){
 
@@ -210,6 +212,80 @@ namespace APISample.Controllers
             }
             
             this.Data = list;
+        }
+
+        /// <summary>
+        /// 新增學校
+        /// </summary>
+        /// <param name="name">學校名稱</param>
+        [HttpGet("insertSchool")]
+        public void insertSchool(String name){
+            string data_string = "{\"o_tlc_agency_name\":\""+name+"\",\"o_tlc_agency_category\":\"1\",\"o_tlc_agency_categorychild\":\"小學\",\"o_tlc_agency_purpose\":\"\",\"o_tlc_agency_service\":\"教育7~12歲幼童\",\"o_tlc_agency_region\":\"test\",\"o_tlc_agency_opentime\":\"平日：0730～1700假日：0800～1600\",\"o_tlc_agency_address\":\"\",\"o_tlc_agency_phone\":\"(02)2311-0395\",\"o_tlc_agency_fax\":\"(02)2331-0319\",\"o_tlc_agency_email\":\"test\",\"o_tlc_agency_admincategory\":\"\",\"o_tlc_agency_img_front\":\"\",\"o_tlc_agency_img_inner\":\"\",\"o_tlc_agency_link\":\"\"}";
+
+            //json string 轉 bson object
+            var data = BsonDocument.Parse(data_string);
+            
+            //寫入mongoDB
+            MongoLogger._db.GetCollection<BsonDocument>(collection).InsertOne(data);
+        }
+
+       
+        /// <summary>
+        /// 修改一個學校名稱
+        /// </summary>
+        /// <param name="from_name">學校名稱</param>
+        /// <param name="to_name">學校名稱</param>
+        [HttpGet("updateOneSchoolName")]
+        public void updateOneSchoolName(string from_name, string to_name){
+            var filter = Builders<School>.Filter.Eq(school => school.o_tlc_agency_name, from_name);
+            var update = Builders<School>.Update.Set(school => school.o_tlc_agency_name, to_name);
+
+            this.Data = MongoLogger._db.GetCollection<School>(collection).UpdateOne(filter,update);
+        }
+
+        /// <summary>
+        /// 修改多個學校名稱
+        /// </summary>
+        /// <param name="from_name">學校名稱</param>
+        /// <param name="to_name">學校名稱</param>
+        [HttpGet("updateManySchoolName")]
+        public void updateManySchoolName(string from_name, string to_name){
+            var filter = Builders<School>.Filter.Eq(school => school.o_tlc_agency_name, from_name);
+            var update = Builders<School>.Update.Set(school => school.o_tlc_agency_name, to_name);
+
+            this.Data = MongoLogger._db.GetCollection<School>(collection).UpdateMany(filter,update);
+        }
+
+
+
+        /// <summary>
+        /// 刪除一間學校
+        /// </summary>
+        /// <param name="name">學校名稱</param>
+        [HttpGet("deleteOneSchoolByName")]
+        public void deleteOneSchoolByName(string name){
+            var filter = Builders<School>.Filter.Eq(school => school.o_tlc_agency_name, name);
+            this.Data = MongoLogger._db.GetCollection<School>(collection).DeleteOne(filter);
+        }
+
+        /// <summary>
+        /// 刪除多間學校
+        /// </summary>
+        /// <param name="name">學校名稱</param>
+        [HttpGet("DeleteManySchoolByName")]
+        public void DeleteManySchoolByName(string name){
+            var filter = Builders<School>.Filter.Eq(school => school.o_tlc_agency_name, name);
+            this.Data = MongoLogger._db.GetCollection<School>(collection).DeleteMany(filter);
+        }
+
+        /// <summary>
+        /// 回傳多少間學校擁有同樣名字
+        /// </summary>
+        /// <param name="name"></param>
+        [HttpGet("CountBySchoolName")]
+        public void CountBySchoolName(string name){
+            var filter = Builders<School>.Filter.Eq(school => school.o_tlc_agency_name, name);
+            this.Data = (int)(MongoLogger._db.GetCollection<School>(collection).Count(filter));
         }
 
     }

@@ -11,7 +11,7 @@ namespace test.TestSamples
 
        [Fact]
        [Trait ("Category", "mongo")]
-       public void TestMongoCreate()
+       public void TestMongo()
        {
             //Given
             MongoExampleController mongoExampleController = new MongoExampleController();
@@ -55,6 +55,76 @@ namespace test.TestSamples
             Assert.Equal("19", list2[0]["total"]);
 
 
+       }
+
+       [Fact]
+       [Trait ("Category", "mongo")]
+       public void TestInsert1Update1Delete1()
+       {
+        //Given
+        MongoExampleController mongoExampleController = new MongoExampleController();
+
+        //When
+        mongoExampleController.insertSchool("school1");
+        
+        //Then
+        mongoExampleController.CountBySchoolName("school1");
+        Assert.Equal(1, mongoExampleController.Data);
+        
+
+        //When
+        mongoExampleController.updateOneSchoolName("school1", "school2");
+        
+        //Then
+        mongoExampleController.CountBySchoolName("school1");
+        Assert.Equal(0, mongoExampleController.Data);
+
+        mongoExampleController.CountBySchoolName("school2");
+        Assert.Equal(1, mongoExampleController.Data);
+
+
+        //When
+        mongoExampleController.deleteOneSchoolByName("school2");
+
+        //Then
+        mongoExampleController.CountBySchoolName("school2");
+        Assert.Equal(0, mongoExampleController.Data);
+       }
+
+       [Fact]
+       [Trait ("Category", "mongo")]
+       public void TestInsertManyUpdateManyDeleteMany()
+       {
+            //Given
+            MongoExampleController mongoExampleController = new MongoExampleController();
+
+            //When
+            mongoExampleController.insertSchool("school1");
+            mongoExampleController.insertSchool("school1");
+            mongoExampleController.insertSchool("school1");
+            
+            //Then
+            mongoExampleController.CountBySchoolName("school1");
+            Assert.Equal(3, mongoExampleController.Data);
+            
+
+            //When
+            mongoExampleController.updateManySchoolName("school1", "school2");
+            
+            //Then
+            mongoExampleController.CountBySchoolName("school1");
+            Assert.Equal(0, mongoExampleController.Data);
+
+            mongoExampleController.CountBySchoolName("school2");
+            Assert.Equal(3, mongoExampleController.Data);
+
+
+            //When
+            mongoExampleController.DeleteManySchoolByName("school2");
+
+            //Then
+            mongoExampleController.CountBySchoolName("school2");
+            Assert.Equal(0, mongoExampleController.Data);
        }
 
     
